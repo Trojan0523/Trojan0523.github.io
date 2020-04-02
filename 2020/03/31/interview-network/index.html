@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Trojan&#96;s的小站">
 <meta property="og:description" content="经典面试题 --网络篇(简写)">
 <meta property="article:published_time" content="2020-03-31T07:34:28.000Z">
-<meta property="article:modified_time" content="2020-04-01T08:12:27.435Z">
+<meta property="article:modified_time" content="2020-04-02T07:43:40.783Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
@@ -333,7 +333,7 @@
 
 <a id="more"></a>
 
-<h3 id="HTTP-与-HTTPS的区别"><a href="#HTTP-与-HTTPS的区别" class="headerlink" title="HTTP 与 HTTPS的区别"></a>HTTP 与 HTTPS的区别</h3><ul>
+<h2 id="HTTP-与-HTTPS的区别"><a href="#HTTP-与-HTTPS的区别" class="headerlink" title="HTTP 与 HTTPS的区别"></a>HTTP 与 HTTPS的区别</h2><ul>
 <li><p>1、 HTTP (HyperText transfer protocol): 超文本传输协议。<br>2、 HTTPS (HTTP + SSL): 在http的基础上加上(Scurity Socket Layer)安全套接字层。  </p>
 </li>
 <li><p>1、 HTTP以明文方式传输文本内容(没有进行数据加密)。<br>2、 HTTPS用SSL证书通过CA认证验证服务器身份，为浏览器和服务器之间进行加密传输，用到非堆成密钥加密。</p>
@@ -343,19 +343,7 @@
 <li><p>1、 HTTP连接简单，无状态协议<br>2、 HTTPS可以进行加密传输，身份验证。</p>
 </li>
 </ul>
-<h3 id="请你说说TCP和UDP的区别"><a href="#请你说说TCP和UDP的区别" class="headerlink" title="请你说说TCP和UDP的区别"></a>请你说说TCP和UDP的区别</h3><ul>
-<li><p>1、 TCP (Transfer Control Protocol) : 传输控制协议<br>2、 UDP (User Datagram Protocol) : 用户数据报协议</p>
-</li>
-<li><p>1、 TCP提供可靠的服务，会进行一个差错处理，重传机制，是一个尽力而为的服务。<br>2、 UDP是不可靠的服务，没有拥塞处理，发送时即使数据丢失也不会进行重传，适合视频通话等应用场景。</p>
-</li>
-<li><p>1、 TCP为点对点连接<br>2、 UDP支持一对多，一对一，多对一和多对多的交互通信。</p>
-</li>
-<li><p>1、 TCP首部开销为20字节<br>2、 UDP首部开销为8字节</p>
-</li>
-<li><p>1、 TCP逻辑通信通道为全双工可靠信道<br>2、 UDP为不可靠信道</p>
-</li>
-</ul>
-<h3 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h3><ul>
+<h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h2><ul>
 <li><p>1XX：返回状态信息<br>2XX：成功状态码<br>3XX：重定向信息<br>4XX：客户端错误信息<br>5XX：服务端错误信息</p>
 </li>
 <li><p>常用状态码</p>
@@ -377,7 +365,46 @@
 </ol>
 </li>
 </ul>
-<h3 id="说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><a href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次" class="headerlink" title="说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次"></a>说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</h3><ul>
+<h2 id="HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别"><a href="#HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别" class="headerlink" title="HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别"></a>HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别</h2><ul>
+<li><ol>
+<li>HTTP 1.0为短连接,连接无法复用，会出现线头阻塞(Head of Line(HOL) Blocking)</li>
+<li>HTTP 1.1默认为持久化连接,一个TCP上可以传送多个HTTP请求和响应，同时增加了Host字段，能实现断点续传，引入管线化(pipeLine)理论，加入缓存处理机制<br>  (字段:cache-control)和状态管理等等</li>
+</ol>
+</li>
+<li><ol>
+<li>HTTP 2.0解决了线头拥塞的问题，最大的更新是支持多路复用，引入了新的二进制分帧层，不再以文本格式传输数据，支持首部压缩，可以使用服务端进行推送，服<br>务器可以对客户端的一个请求发送多个响应。</li>
+</ol>
+</li>
+</ul>
+<h2 id="什么是HTTP无状态，可以通过什么方式解决"><a href="#什么是HTTP无状态，可以通过什么方式解决" class="headerlink" title="什么是HTTP无状态，可以通过什么方式解决"></a>什么是HTTP无状态，可以通过什么方式解决</h2><ul>
+<li><p>HTTP无状态指对事务的处理没有记忆缓存的能力，缺少状态记录</p>
+</li>
+<li><p>解决方式: </p>
+<pre><code>1. 第一次访问时生成一个Cookie，二次访问时通过Cookie可以获取其访问状态。
+2. 通过Session保存状态信息。
+3. 二者区别：Cookie信息存储在本地客户端浏览器中，Session信息则存储在服务器中。</code></pre></li>
+</ul>
+<h2 id="常用的HTTP请求方法"><a href="#常用的HTTP请求方法" class="headerlink" title="常用的HTTP请求方法"></a>常用的HTTP请求方法</h2><ul>
+<li>get: 用于访问URI，获取资源</li>
+<li>post: 用于传输信息提交给服务器</li>
+<li>put: 传输文件</li>
+<li>head: 获取报文首部</li>
+<li>delete: 删除文件</li>
+<li>options: 查询相应URI支持的HTTP方法</li>
+</ul>
+<h2 id="Cookie和Session和LocalStorage和SessionStorage的区别"><a href="#Cookie和Session和LocalStorage和SessionStorage的区别" class="headerlink" title="Cookie和Session和LocalStorage和SessionStorage的区别"></a>Cookie和Session和LocalStorage和SessionStorage的区别</h2><h2 id="请你说说TCP和UDP的区别"><a href="#请你说说TCP和UDP的区别" class="headerlink" title="请你说说TCP和UDP的区别"></a>请你说说TCP和UDP的区别</h2><ul>
+<li><p>1、 TCP (Transfer Control Protocol) : 传输控制协议<br>2、 UDP (User Datagram Protocol) : 用户数据报协议</p>
+</li>
+<li><p>1、 TCP提供可靠的服务，会进行一个差错处理，重传机制，是一个尽力而为的服务。<br>2、 UDP是不可靠的服务，没有拥塞处理，发送时即使数据丢失也不会进行重传，适合视频通话等应用场景。</p>
+</li>
+<li><p>1、 TCP为点对点连接<br>2、 UDP支持一对多，一对一，多对一和多对多的交互通信。</p>
+</li>
+<li><p>1、 TCP首部开销为20字节<br>2、 UDP首部开销为8字节</p>
+</li>
+<li><p>1、 TCP逻辑通信通道为全双工可靠信道<br>2、 UDP为不可靠信道</p>
+</li>
+</ul>
+<h2 id="说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><a href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次" class="headerlink" title="说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次"></a>说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</h2><ul>
 <li>未完待续。。。持续更新</li>
 </ul>
 
@@ -447,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/10/%E7%90%86%E8%B4%A2Tips/" rel="next" title="每日基金收盘点评">
-                <i class="fa fa-chevron-left"></i> 每日基金收盘点评
+              <a href="/2020/03/09/docker-mistake/" rel="next" title="踩坑实录">
+                <i class="fa fa-chevron-left"></i> 踩坑实录
               </a>
             
           </div>
@@ -456,6 +483,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/01/%E7%90%86%E8%B4%A2Tips/" rel="prev" title="每日基金收盘点评">
+                每日基金收盘点评 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -610,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">经典面试题 --网络篇(简写)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-与-HTTPS的区别"><span class="nav-number">1.0.1.</span> <span class="nav-text">HTTP 与 HTTPS的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请你说说TCP和UDP的区别"><span class="nav-number">1.0.2.</span> <span class="nav-text">请你说说TCP和UDP的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">1.0.3.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><span class="nav-number">1.0.4.</span> <span class="nav-text">说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">经典面试题 --网络篇(简写)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-与-HTTPS的区别"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP 与 HTTPS的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是HTTP无状态，可以通过什么方式解决"><span class="nav-number">1.4.</span> <span class="nav-text">什么是HTTP无状态，可以通过什么方式解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的HTTP请求方法"><span class="nav-number">1.5.</span> <span class="nav-text">常用的HTTP请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie和Session和LocalStorage和SessionStorage的区别"><span class="nav-number">1.6.</span> <span class="nav-text">Cookie和Session和LocalStorage和SessionStorage的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请你说说TCP和UDP的区别"><span class="nav-number">1.7.</span> <span class="nav-text">请你说说TCP和UDP的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><span class="nav-number">1.8.</span> <span class="nav-text">说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</span></a></li></ol></li></ol></div>
             
 
           </div>
