@@ -85,11 +85,14 @@
 <meta property="og:url" content="http://pukhungyu.club/2020/03/31/interview-network/index.html">
 <meta property="og:site_name" content="Trojan&#96;s的小站">
 <meta property="og:description" content="经典面试题 --网络篇(简写)">
+<meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/connect.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/disconnect.jpg">
 <meta property="article:published_time" content="2020-03-31T07:34:28.000Z">
-<meta property="article:modified_time" content="2020-04-02T07:43:40.783Z">
+<meta property="article:modified_time" content="2020-04-06T08:13:53.833Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pukhungyu.club/2020/03/31/interview-network/connect.png">
 
 
 
@@ -405,6 +408,36 @@
 </li>
 </ul>
 <h2 id="说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><a href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次" class="headerlink" title="说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次"></a>说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</h2><ul>
+<li><p>TCP三次握手是用来确认双方是否有接收数据和传输数据的能力，三次握手确保了双方能够进行收发的操作，从而进行连接，少了一次握手会造成一方对其中的一个收发能力的无法确认，多了一次则造成资源的浪费或者连接效率的低下。</p>
+</li>
+<li><p>三次握手如图所示<br><img src="/2020/03/31/interview-network/connect.png" alt></p>
+</li>
+</ul>
+<ol>
+<li><p>建立连接时，客户端将SYN包标志位至1发送给服务器端，进入监听状态。</p>
+</li>
+<li><p>服务器端接收到客户端的SYN包后，将SYN包和ACK包标志位至1，产生随机值seq = k，将SYN和ACK包发送给客户端。</p>
+</li>
+<li><p>客户端接收到SYN和ACK包后，检查ACK是否为y+1，ACK标志位是否为1，是则将连接建立</p>
+</li>
+</ol>
+<ul>
+<li><p>四次挥手如图所示<br><img src="/2020/03/31/interview-network/disconnect.jpg" alt></p>
+</li>
+<li><p>四次挥手是用于断开连接的，那么断开连接需要确认也就是服务器端是关闭状态，同时客户端也不再传输数据了，所以要有四次挥手的过程</p>
+</li>
+</ul>
+<ol>
+<li><p>客户端发送FIN包，用于关闭客户端到服务端的数据传送，此时客户端的状态为:FIN-WAIT-1.</p>
+</li>
+<li><p>服务器端收到FIN包之后，发送ACK包给客户端，ACK确认号为收到序列+ 1，此时服务器端状态为: ClOSED-WAIT</p>
+</li>
+<li><p>服务器端发送FIN包，用于关闭客户端到服务器端的数据传输，此时服务器端状态为：LAST_ACK</p>
+</li>
+<li><p>客户端收到FIN包后，客户端进入TIME-WAIT状态，发送一个ACK给服务器端，确认序号为收到序号+1，服务器端进入ClOSE状态，四次挥手结束</p>
+</li>
+</ol>
+<ul>
 <li>未完待续。。。持续更新</li>
 </ul>
 
