@@ -88,7 +88,7 @@
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/connect.png">
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/disconnect.jpg">
 <meta property="article:published_time" content="2020-03-31T07:34:28.000Z">
-<meta property="article:modified_time" content="2020-04-06T08:13:53.833Z">
+<meta property="article:modified_time" content="2020-04-07T07:53:34.621Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
@@ -395,7 +395,17 @@
 <li>delete: 删除文件</li>
 <li>options: 查询相应URI支持的HTTP方法</li>
 </ul>
-<h2 id="Cookie和Session和LocalStorage和SessionStorage的区别"><a href="#Cookie和Session和LocalStorage和SessionStorage的区别" class="headerlink" title="Cookie和Session和LocalStorage和SessionStorage的区别"></a>Cookie和Session和LocalStorage和SessionStorage的区别</h2><h2 id="请你说说TCP和UDP的区别"><a href="#请你说说TCP和UDP的区别" class="headerlink" title="请你说说TCP和UDP的区别"></a>请你说说TCP和UDP的区别</h2><ul>
+<h2 id="Cookie和Session和LocalStorage和SessionStorage的区别"><a href="#Cookie和Session和LocalStorage和SessionStorage的区别" class="headerlink" title="Cookie和Session和LocalStorage和SessionStorage的区别"></a>Cookie和Session和LocalStorage和SessionStorage的区别</h2><ul>
+<li><p>Cookie和Session的区别:</p>
+<pre><code>1. Cookie存储在本地浏览器中，Session存储在服务器文件中
+2. Session是基于Cookie实现的，具体做法是将SessionID写到Cookie中去，然后发送到服务器</code></pre></li>
+<li><p>Cookie和LocalStorage的区别:</p>
+<pre><code>1. Cookie的大小为4K，而LocalStorage的大小一般为5M到10M不定(不同的浏览器大小不一样)
+2. Cookie会被发送到服务器，LocalStorage不会</code></pre></li>
+<li><p>LocalStorage和SessionStorage的区别:</p>
+<pre><code>LocalStorage一般不会过期(除非用户自行清除)，SessionStorage退出浏览器(Session断开)就会清除</code></pre></li>
+</ul>
+<h2 id="请你说说TCP和UDP的区别"><a href="#请你说说TCP和UDP的区别" class="headerlink" title="请你说说TCP和UDP的区别"></a>请你说说TCP和UDP的区别</h2><ul>
 <li><p>1、 TCP (Transfer Control Protocol) : 传输控制协议<br>2、 UDP (User Datagram Protocol) : 用户数据报协议</p>
 </li>
 <li><p>1、 TCP提供可靠的服务，会进行一个差错处理，重传机制，是一个尽力而为的服务。<br>2、 UDP是不可靠的服务，没有拥塞处理，发送时即使数据丢失也不会进行重传，适合视频通话等应用场景。</p>
@@ -438,7 +448,7 @@
 </li>
 </ol>
 <ul>
-<li>未完待续。。。持续更新</li>
+<li>未完待续，不断整理学习，持续更新。。。</li>
 </ul>
 
       
@@ -600,7 +610,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -613,7 +623,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
