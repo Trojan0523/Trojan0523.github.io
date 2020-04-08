@@ -88,7 +88,7 @@
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/connect.png">
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/disconnect.jpg">
 <meta property="article:published_time" content="2020-03-31T07:34:28.000Z">
-<meta property="article:modified_time" content="2020-04-07T07:53:34.621Z">
+<meta property="article:modified_time" content="2020-04-08T07:40:51.992Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
@@ -339,7 +339,7 @@
 <h2 id="HTTP-与-HTTPS的区别"><a href="#HTTP-与-HTTPS的区别" class="headerlink" title="HTTP 与 HTTPS的区别"></a>HTTP 与 HTTPS的区别</h2><ul>
 <li><p>1、 HTTP (HyperText transfer protocol): 超文本传输协议。<br>2、 HTTPS (HTTP + SSL): 在http的基础上加上(Scurity Socket Layer)安全套接字层。  </p>
 </li>
-<li><p>1、 HTTP以明文方式传输文本内容(没有进行数据加密)。<br>2、 HTTPS用SSL证书通过CA认证验证服务器身份，为浏览器和服务器之间进行加密传输，用到非堆成密钥加密。</p>
+<li><p>1、 HTTP以明文方式传输文本内容(没有进行数据加密)。<br>2、 HTTPS用SSL证书通过CA认证验证服务器身份，为浏览器和服务器之间进行加密传输，用到非对称密钥加密。</p>
 </li>
 <li><p>1、 HTTP端口: 80<br>2、 HTTPS端口: 443</p>
 </li>
@@ -371,11 +371,11 @@
 <h2 id="HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别"><a href="#HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别" class="headerlink" title="HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别"></a>HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别</h2><ul>
 <li><ol>
 <li>HTTP 1.0为短连接,连接无法复用，会出现线头阻塞(Head of Line(HOL) Blocking)</li>
-<li>HTTP 1.1默认为持久化连接,一个TCP上可以传送多个HTTP请求和响应，同时增加了Host字段，能实现断点续传，引入管线化(pipeLine)理论，加入缓存处理机制<br>  (字段:cache-control)和状态管理等等</li>
+<li>HTTP 1.1默认为持久化连接,一个TCP上可以传送多个HTTP请求和响应，同时增加了Host字段，能实现断点续传，引入管线化(pipeLine)理论，加入缓存处理机制(字段:cache-control)和状态管理等等。</li>
 </ol>
 </li>
 <li><ol>
-<li>HTTP 2.0解决了线头拥塞的问题，最大的更新是支持多路复用，引入了新的二进制分帧层，不再以文本格式传输数据，支持首部压缩，可以使用服务端进行推送，服<br>务器可以对客户端的一个请求发送多个响应。</li>
+<li>HTTP 2.0解决了线头拥塞的问题，最大的更新是支持多路复用，引入了新的二进制分帧层，不再以文本格式传输数据，支持首部压缩，可以使用服务端进行推送，服务器可以对客户端的一个请求发送多个响应。</li>
 </ol>
 </li>
 </ul>
