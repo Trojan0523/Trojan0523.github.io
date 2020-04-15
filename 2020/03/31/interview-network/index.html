@@ -89,7 +89,7 @@
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/connect.png">
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/disconnect.jpg">
 <meta property="article:published_time" content="2020-03-31T07:34:28.000Z">
-<meta property="article:modified_time" content="2020-04-13T08:13:50.322Z">
+<meta property="article:modified_time" content="2020-04-15T11:45:42.556Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
@@ -495,6 +495,21 @@
 <li><p>客户端收到FIN包后，客户端进入TIME-WAIT状态，发送一个ACK给服务器端，确认序号为收到序号+1，服务器端进入ClOSE状态，四次挥手结束</p>
 </li>
 </ol>
+<h2 id="从URL输入到页面展现到底发生什么？"><a href="#从URL输入到页面展现到底发生什么？" class="headerlink" title="从URL输入到页面展现到底发生什么？"></a>从URL输入到页面展现到底发生什么？</h2><p>总体来说分为以下几个过程:</p>
+<ul>
+<li><p>DNS 解析:将域名解析成 IP 地址<br>  我们的域名其实是由ip地址进行dns系统解析得到的，所以要让域名找到我们的服务器必须要经过域名的解析翻译成ip地址，再从得到的ip地址去找相应的服务器才能访问，而dns解析首先会在浏览器缓存里面查找相应的DNS记录，如果找不到在去操作系统本地去找，然后再到上一级的路由器缓存里面去找DNS缓存，还是找不到的话继续往上级的ISP(Internet Server Provider)去找对应的DNS服务器，如果还找不到就会向根服务器发出请求进行递归查询。</p>
+</li>
+<li><p>TCP 连接：TCP 三次握手<br>  在DNS找到相应的ip地址后，浏览器就会向服务器发送HTTP请求，发送请求的同时要建立连接就需要进行TCP三次握手，具体流程请参照上文的三次握手题目。</p>
+</li>
+<li><p>发送 HTTP 请求<br>  发送的HTTP请求中也会包括完整的一个请求报文，其中包括请求的报文首部、空行和请求报文的主体内容。请求首部包括请求行，首部实体字段、通用首部字段和请求首部字段，空行用来区分和分割报文首部和报文主体。</p>
+</li>
+<li><p>服务器处理请求并返回 HTTP 报文<br>  服务器收到HTTP请求之后会处理发送的请求信息，并且返回后台程序处理的响应结果，后台程序(也就是我们的后端开发，假设为MVC框架模式)会执行一系列的操作，比如将前台返回的数据发送到后端进行数据的处理，返回视图的修改和渲染，或对数据库进行增删查改等操作，或者进行业务逻辑的处理，简而言之就是浏览器首先发送过来的请求先经过控制器进行业务逻辑的处理，然后调用模型，获取数据库的数据并作相应的操作，数据获取后将渲染好的页面和响应信息以响应报文的形式回送给客户端，然后浏览器进行对网页的渲染加载。HTTP响应报文包含响应报文首部、空行和相应报文主体内容，响应报文首部包含状态行(HTTP版本和状态码)、响应首部字段，通用首部字段和实体首部字段。</p>
+</li>
+<li><p>浏览器解析渲染页面<br>  浏览器收到回送响应报文后进行解析渲染页面，浏览器解析渲染页面首先会根据HTML解析DOM树，生成DOM节点，根据CSS解析生成CSS规则树，结合DOM树和CSS规则树生成渲染树，根据渲染树计算每一个节点的信息，然后根据计算好的信息去绘制页面。</p>
+</li>
+<li><p>断开连接：TCP 四次挥手<br>  参考上文TCP四次挥手，客户端断开与服务器端的连接。</p>
+</li>
+</ul>
 <ul>
 <li>未完待续，不断整理学习，持续更新。。。</li>
 </ul>
@@ -732,7 +747,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">经典面试题 --网络篇(简写)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络七层、五层、四层模型各自说说看？-自上而下"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络七层、五层、四层模型各自说说看？(自上而下)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个完整的HTTP请求所包含的七个步骤"><span class="nav-number">1.2.</span> <span class="nav-text">一个完整的HTTP请求所包含的七个步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP请求报文和响应报文格式"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP请求报文和响应报文格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-与-HTTPS的区别"><span class="nav-number">1.4.</span> <span class="nav-text">HTTP 与 HTTPS的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">1.5.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别"><span class="nav-number">1.6.</span> <span class="nav-text">HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是HTTP无状态，可以通过什么方式解决"><span class="nav-number">1.7.</span> <span class="nav-text">什么是HTTP无状态，可以通过什么方式解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的HTTP请求方法"><span class="nav-number">1.8.</span> <span class="nav-text">常用的HTTP请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie和Session和LocalStorage和SessionStorage的区别"><span class="nav-number">1.9.</span> <span class="nav-text">Cookie和Session和LocalStorage和SessionStorage的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请你说说TCP和UDP的区别"><span class="nav-number">1.10.</span> <span class="nav-text">请你说说TCP和UDP的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><span class="nav-number">1.11.</span> <span class="nav-text">说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">经典面试题 --网络篇(简写)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络七层、五层、四层模型各自说说看？-自上而下"><span class="nav-number">1.1.</span> <span class="nav-text">计算机网络七层、五层、四层模型各自说说看？(自上而下)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个完整的HTTP请求所包含的七个步骤"><span class="nav-number">1.2.</span> <span class="nav-text">一个完整的HTTP请求所包含的七个步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP请求报文和响应报文格式"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP请求报文和响应报文格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-与-HTTPS的区别"><span class="nav-number">1.4.</span> <span class="nav-text">HTTP 与 HTTPS的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">1.5.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-0-和-HTTP-1-1-和HTTP-2-0的区别"><span class="nav-number">1.6.</span> <span class="nav-text">HTTP 1.0 和 HTTP 1.1 和HTTP 2.0的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是HTTP无状态，可以通过什么方式解决"><span class="nav-number">1.7.</span> <span class="nav-text">什么是HTTP无状态，可以通过什么方式解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的HTTP请求方法"><span class="nav-number">1.8.</span> <span class="nav-text">常用的HTTP请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie和Session和LocalStorage和SessionStorage的区别"><span class="nav-number">1.9.</span> <span class="nav-text">Cookie和Session和LocalStorage和SessionStorage的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请你说说TCP和UDP的区别"><span class="nav-number">1.10.</span> <span class="nav-text">请你说说TCP和UDP的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说说TCP三次握手和四次挥手-为什么需要三次握手而不是两次或者四次"><span class="nav-number">1.11.</span> <span class="nav-text">说说TCP三次握手和四次挥手,为什么需要三次握手而不是两次或者四次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从URL输入到页面展现到底发生什么？"><span class="nav-number">1.12.</span> <span class="nav-text">从URL输入到页面展现到底发生什么？</span></a></li></ol></li></ol></div>
             
 
           </div>
