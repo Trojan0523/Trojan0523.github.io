@@ -87,8 +87,13 @@
 <meta property="og:description" content="闭包深入浅出">
 <meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/global.png">
 <meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/local.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/closure1.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/closure2.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/closure.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/this.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/04/07/closure/getN.png">
 <meta property="article:published_time" content="2020-04-07T07:03:38.000Z">
-<meta property="article:modified_time" content="2020-04-20T07:17:19.900Z">
+<meta property="article:modified_time" content="2020-04-21T09:27:12.908Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -351,6 +356,43 @@
 <li>局部作用域<br><img src="/2020/04/07/closure/local.png" alt></li>
 </ul>
 <p>这里在函数f1内部定义了一个n并赋值为999，然后在函数外部调用这个n，很明显这里n在函数内部定义的，所以函数外部是没有办法找到n的定义，所以出现一个引用错误的报错。</p>
+<p>方便理解下面的闭包，同时要对作用域做一个总结:函数执行时所在的作用域，是定义时的作用域，而不是调用时所在的作用域，也就是说函数在定义的时候就已经确定了函数的作用域链了，他们执行顺序上下文不会做出任何的改变。</p>
+<p>介绍完这两个作用域，我们接着再举一个例子：<br><img src="/2020/04/07/closure/closure1.png" alt></p>
+<p> 这里函数f1中定义了一个n并赋值为999，函数内部定义了一个f2的函数，并输出n。那么根据我们之前的局部作用域中的理解来看，n会输出一个undefined才对，但是为什么这里会输出999？这里要引进一个JavaScript特有的链式作用域<code>chain scope</code>,函数中的子对象会一级一级的往上寻找所有父对象的变量，所以子对象是可以看到父对象(也就是上一级的声明对象)，所以这里的例子中输出的n在f2中没有找到相应的变量声明，就往上一级去寻找，直到找到这个声明变量为止。n的声明无论放在f1函数体里面还是函数体外面，f2中的n在f2中找不到声明的变量就会往上级寻找。</p>
+<p>所以在这里函数f2就是闭包，往回看红宝书中对闭包的定义，f2中作用域的变量就会跳出本级作用域往上寻找(也就是去另一个作用域中去访问变量)，f2是一个能够读取其他函数内部变量的函数，闭包最大的特点就是能够记录到初始的环境，对函数内部的变量进行访问。</p>
+<p>通过两个有趣的例子方便大家实践一下闭包的用法<br><img src="/2020/04/07/closure/closure2.png" alt></p>
+<p>首先这里定义了一个全局变量并赋值为’The Window’,然后再定义了一个object对象，对象里面给name定义了一个”My Object”,然后后面定义了一个getNameFunc属性，里面声明了一个匿名函数，函数返回一个匿名函数，匿名函数里面返回this.name,定义完后在控制台中输出object.getNameFunc函数，这里我们看getNameFunc,函数中返回了一个函数，里面返回一个this.name，由于我们在第二个function()局部作用域下找不到name的这个属性，那么我们就往上找(根据chain scope)，到第一个function(),仍然找不到，那我们再往上一级，找到了在全局作用域下定义的name:”The Window”,然后输出，这里肯定会有同学有疑问：为什么往上级找不是找到object下的name:”My object”?，这个问题其实要解答很简单，因为在第一个function()调用时，作用域是在object下的，也就是说，getNameFunc方法和object下的name属性是在同一个作用域下的，所以要往上一级也就是函数object定义的那一级去找name的定义。</p>
+<p>例子接着:<br><img src="/2020/04/07/closure/closure.png" alt></p>
+<p>同样这里也是在全局定义了一个name并赋值”The Window”,之后定义一个object对象，对象中为name属性赋值”My object”,定义了一个getNameFuc属性，里面声明了一个匿名函数，函数中将this赋值给变量var，返回一个函数，函数中返回that.name，这里答案是”My Object”，我们注意到，这道题跟上一题的区别在于在第一个函数内部将this赋值给that，从而改变了函数的执行环境，that的引用指向了object，所以调用object.getNameFunc()()就返回了”my object”</p>
+<ul>
+<li><p>关于this对象</p>
+<p>  this对象在运行时基于函数的执行环境进行绑定，在全局函数中，this等于window对象，而当函数被作为某个对象的方法调用时，this就等于那个对象，所以就很好解释下面例子<code>this</code>和<code>that</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(that);</span><br><span class="line">console.log(this);</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/07/closure/this.png" alt></p>
+</li>
+</ul>
+<ul>
+<li>匿名函数</li>
+</ul>
+<p>再来说说红宝书中大家有可能会混淆的匿名函数，匿名函数(anonymous function),就是没有定义名字的函数，由于没有名字去命名所以通常都是自执行函数或者在函数体内返回时利用匿名函数进行返回，两个用法分别举例：</p>
+<p>自执行函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var n &#x3D; 999;</span><br><span class="line">(function () &#123;</span><br><span class="line">	console.log(n); &#x2F;&#x2F; 999</span><br><span class="line">	&#125; ());</span><br><span class="line">console.log(n); &#x2F;&#x2F; 999</span><br></pre></td></tr></table></figure>
+<p>匿名函数函数在定义完后立刻就进行执行，这里的好处就是如果在函数内部定义了相同的变量则不会受到其他环境变量的污染。</p>
+<p>函数体内返回时利用匿名函数进行返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function f1() &#123;</span><br><span class="line">	var n &#x3D; 999;</span><br><span class="line">	return function() &#123;</span><br><span class="line">		console.log(n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">var f2 &#x3D; f1();</span><br><span class="line">f2(); &#x2F;&#x2F; 999</span><br></pre></td></tr></table></figure>
+
+<p>两个匿名函数都利用了闭包的特性，函数体内的变量通过作用域链往上寻找声明变量，虽然是利用了闭包的特性，但是这不代表匿名函数就是闭包，这里不需要过于深究只需要记住即可</p>
+<ul>
+<li>闭包の注意点</li>
+</ul>
+<ol>
+<li><p>由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退出函数之前，将不使用的局部变量全部删除。</p>
+</li>
+<li><p>闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。</p>
+</li>
+</ol>
+<p>举例:<br><img src="/2020/04/07/closure/getN.png" alt></p>
+<p>getN()函数内部返回时定义了一个函数函数内部的set方法内将n+1，setN调用时按照执行顺序将set方法调用后输出n，然后再全局下再打印一次n的值，n的值被保留了下来，所以这里的n没有被gc，会带来一定的内存消耗，同时这里的闭包在父函数外部对父函数内部变量的值做了改变，所以在使用上要慎重，避免代码不严谨时内部变量做了修改而没有发现。</p>
 
       
     </div>
