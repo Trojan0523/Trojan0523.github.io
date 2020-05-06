@@ -89,7 +89,7 @@
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/connect.png">
 <meta property="og:image" content="http://pukhungyu.club/2020/03/31/interview-network/disconnect.jpg">
 <meta property="article:published_time" content="2020-03-31T07:34:28.000Z">
-<meta property="article:modified_time" content="2020-04-22T08:04:17.462Z">
+<meta property="article:modified_time" content="2020-05-06T07:59:30.241Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="interview">
 <meta name="twitter:card" content="summary">
@@ -413,6 +413,8 @@
 <li>500 internal server error：服务端内部错误，一般程序代码出现错误导致</li>
 <li>502 Bad Gateway： 网关错误</li>
 <li>503 server unavailable： 服务器过载，不可用 </li>
+<li>(补充) 405 Method notAllowed 访问方法不被允许</li>
+<li>414 URI Too Long 客户端请求URI超过服务器允许的范围</li>
 </ol>
 </li>
 </ul>
@@ -449,7 +451,8 @@
 2. Session是基于Cookie实现的，具体做法是将SessionID写到Cookie中去，然后发送到服务器</code></pre></li>
 <li><p>Cookie和LocalStorage的区别:</p>
 <pre><code>1. Cookie的大小为4K，而LocalStorage的大小一般为5M到10M不定(不同的浏览器大小不一样)
-2. Cookie会被发送到服务器，LocalStorage不会</code></pre></li>
+2. Cookie会被发送到服务器，LocalStorage不会
+3. Cookie用来存放用户信息，而LocalStorage用来存放不重要数据</code></pre></li>
 <li><p>LocalStorage和SessionStorage的区别:</p>
 <pre><code>LocalStorage一般不会过期(除非用户自行清除)，SessionStorage退出浏览器(Session断开)就会清除</code></pre></li>
 </ul>
@@ -673,7 +676,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
