@@ -79,17 +79,33 @@
 
 
 
-<meta name="description" content="浅谈Promise   MDNPromise 对象是一个代理对象（代理一个值），被代理的值在Promise对象创建时可能是未知的。它允许你为异步操作的成功和失败分别绑定相应的处理方法（handlers）。 这让异步方法可以像同步方法那样返回值，但并不是立即返回最终执行结果，而是一个能代表未来出现的结果的promise对象。  Promise对象会有三个状态进行切换:  pending: 初始状态，">
+<meta name="description" content="浅谈Promise">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Promise">
 <meta property="og:url" content="http://pukhungyu.club/2020/05/06/Promise/index.html">
 <meta property="og:site_name" content="Trojan&#96;s的小站">
-<meta property="og:description" content="浅谈Promise   MDNPromise 对象是一个代理对象（代理一个值），被代理的值在Promise对象创建时可能是未知的。它允许你为异步操作的成功和失败分别绑定相应的处理方法（handlers）。 这让异步方法可以像同步方法那样返回值，但并不是立即返回最终执行结果，而是一个能代表未来出现的结果的promise对象。  Promise对象会有三个状态进行切换:  pending: 初始状态，">
+<meta property="og:description" content="浅谈Promise">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/grammer.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/then.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/catch().png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/setTimeout.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/catchMultiMistake.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/catchImprove.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/finally.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/all.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/catch_sync.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/allSettled.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/any.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/resolve.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/noParams.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/reject.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/05/06/Promise/image_onload.png">
 <meta property="article:published_time" content="2020-05-06T07:12:26.000Z">
-<meta property="article:modified_time" content="2020-05-28T07:19:34.043Z">
+<meta property="article:modified_time" content="2020-05-29T16:33:48.415Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pukhungyu.club/2020/05/06/Promise/grammer.png">
 
 
 
@@ -330,15 +346,16 @@
 
       
         <h1 style="text-align: center;">浅谈Promise</h1>
+<a id="more"></a>
 
-<blockquote>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><blockquote>
 <p>MDN<br>Promise 对象是一个代理对象（代理一个值），被代理的值在Promise对象创建时可能是未知的。它允许你为异步操作的成功和失败分别绑定相应的处理方法（handlers）。 这让异步方法可以像同步方法那样返回值，但并不是立即返回最终执行结果，而是一个能代表未来出现的结果的promise对象。</p>
 </blockquote>
 <p>Promise对象会有三个状态进行切换:</p>
 <ul>
 <li>pending: 初始状态，字面上解析为挂起态，未进行操作处理。</li>
 <li>fulfilled: 完成态，表示操作已经处理成功。</li>
-<li>rejected: 失败态，表示操作处理失败。</li>
+<li>rejected: 拒绝态，表示操作处理失败。</li>
 </ul>
 <p>Promise字面意思就是”承诺”，表示其他手段都无法改变，所以Promise用这三个状态切换来表示异步操作的Action，用两种情况的发生表示状态的处理方法:</p>
 <ol>
@@ -347,8 +364,54 @@
 </ol>
 <p>一旦两种情况出现其中一种，状态就会进行凝固，无法进行改变，我们将这种状态称为resolved(已定型)，状态发生改变后再往promise函数添加回调函数也只能获得resolved的结果。</p>
 <p>优点: promise的出现让以往层层嵌套的回调函数变为规范的链式写法，有了promise，异步操作逻辑变得更加清晰。</p>
-<p>缺点: 一旦创建promise就会立即执行，无法中途取消(原子性)，pending态时无法得知目前进展到哪一阶段(开始或即将完成)</p>
-<p>在ES6中，Promise已经写进了语言标准，在原Promise的基础上提供了更加强大的用法</p>
+<p>缺点: 一旦创建promise就会立即执行，无法中途取消(原子性)，pending态时无法得知目前进展到哪一阶段(开始或即将完成),或许在看到async和await的时候会有眼前一亮的感觉。~~</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p><img src="/2020/05/06/Promise/grammer.png" alt><br>Promise构造函数接受一个函数作为参数，函数中有resolve和reject两个参数，也可以作为函数使用:<code>resolve()</code> <code>reject()</code> 表示状态的切换，resolve函数表示状态从”挂起”变为”成功”(pending -&gt; fulfilled)，并将异步操作的结果作为参数传递出去；reject函数表示状态从”挂起”变为”失败”(pending -&gt; rejected)，并将异步操作的报错作为参数传递出去。</p>
+<h3 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h3><p>promise实例创建之后，可以使用<code>then</code>方法对resolved态和rejected态的回调函数进行指定:<br><img src="/2020/05/06/Promise/then.png" alt></p>
+<p><code>then</code>方法同时还支持链式调用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise.then(success1).then(success2).then(success3);</span><br></pre></td></tr></table></figure>
+<p>若状态为完成态，会依次执行success1、success2、success3</p>
+<p>在ES6中，Promise已经写进了语言标准，在原Promise的基础上提供了更加强大的用法：</p>
+<hr>
+<h3 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h3><p>为了更好区分rejected态和resolved态的回调，<code>catch()</code>方法提供了指定发生rejected态错误时的回调函数,等同于<code>.then(null,rejected)</code> 或<code>.then(undefined, rejected)</code>。</p>
+<p>example:<br><img src="/2020/05/06/Promise/catch().png" alt></p>
+<p>在Promise对象p中通过then方法将完成态进行输出，通过catch方法对错误在控制台上进行打印，使用catch方法使得错误捕获更清晰直观的在代码上显示出来。</p>
+<p><strong style="color: red">注意:</strong> 如果Promise对象内部对发生的错误未进行捕获，内部会抛出默认的错误提示，不会影响脚本Promise对象外部的执行，也就是不会因为Promise内部错误中断脚本执行</p>
+<p><img src="/2020/05/06/Promise/setTimeout.png" alt></p>
+<p>上面代码是Promise对象跟setTimeout混用，promise作为微任务已经运行结束了，宏任务setTimeout在下一轮EventLoop中才会抛出错误，错误在函数体外抛出，根据事件循环机制未捕获的错误会冒泡到最外层，所以这里就需要<code>catch()</code>方法为我们去捕获内部发生的错误。如果函数体内没有捕获到错误，那么<code>catch()</code>方法会自动跳过不执行。</p>
+<p><code>catch()</code>方法里面也可以抛出错误，那么方法本身是无法捕获自己内部所出现的错误的，所以catch内部如果出现错误的话就需要在设置一个<code>catch()</code>方法去捕获异常错误:<br><img src="/2020/05/06/Promise/catchMultiMistake.png" alt></p>
+<p>上面代码只抛出了一个错误，因为后面没有<code>catch()</code>方法对上一个<code>catch()</code>方法的错误进行捕获，所以在设置一个<code>catch()</code>方法进行捕获即可:<br><img src="/2020/05/06/Promise/catchImprove.png" alt></p>
+<hr>
+<h3 id="3-Promise-prototype-finally"><a href="#3-Promise-prototype-finally" class="headerlink" title="3.Promise.prototype.finally()"></a>3.Promise.prototype.finally()</h3><p><code>finally()</code>方法是对Promise对象无论最后处于什么状态都会执行的操作:<br><img src="/2020/05/06/Promise/finally.png" alt><br>上面代码无论Promise处于哪个状态，<code>finally()</code>都会被执行，finally的实现本质上是then的特例，将then方法成功和失败的情况各写一次也能实现finally，但是为了不冗余的思想，建议还是使用<code>finally()</code>。</p>
+<hr>
+<h3 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4.Promise.all()"></a>4.Promise.all()</h3><p>all()方法用于将多个Promise实例包装成一个新的Promise实例，其实就是将多个Promise写进一个集合内:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const p &#x3D; Promise.all([p1,p2,p3]);</span><br></pre></td></tr></table></figure>
+<p><code>Promise.all()</code>方法接受一个数组作为参数，p1,p2,p3都是Promise实例，新的Promise实例的状态由p1,p2,p3决定，只有全部promise实例都为fulfilled态时p的状态才会变为resolved，相反，有一个为rejected态的话p的状态就会变为rejected。</p>
+<p>example:<br><img src="/2020/05/06/Promise/all.png" alt><br>上面代码Promise集合要进行通过书名和登记用户对借书人的查找，在<code>booksPromise</code>和<code>userPromise</code>进行了对数据库的访问，进行异步操作，查询到相关结果后返回，<code>Promise.all()</code>中的<code>then()</code>才能进行回调。</p>
+<p><b style="color: blue;">注意：</b>如果Promise实例自己定义了catch()方法，Promise集合中的catch()方法不会因为触发Promise实例的reject而触发，而是会调用Promise实例中定义的catch()方法<br><img src="/2020/05/06/Promise/catch_sync.png" alt><br>上述代码p1定义了自己的then()方法和catch()方法，在执行resolve()时会将’hello’作为result进行返回，p2则会抛出一个错误，整个错误会作为结果进行返回，在执行完catch()操作后p2的状态是rejected，但是接着他还会执行then()方法，将报错作为result返回，执行到这里p2的状态改变为resolved， 代码执行到Promise.all()时，由于p1、p2两个状态都为resolved，所以直接执行then()方法的操作，返回[“hello”, Error: error occour]。</p>
+<hr>
+<h3 id="5-Promise-race"><a href="#5-Promise-race" class="headerlink" title="5.Promise.race()"></a>5.Promise.race()</h3><p>race()方法同样用于将多个Promise实例包装成一个新的Promise实例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const p &#x3D; Promise.race([p1, p2, p3]);</span><br></pre></td></tr></table></figure>
+<p>与all()方法相比，如果集合内的其中一个Promise实例状态发生改变，那么新的Promise包装实例状态也会跟着发生改变，改变的Promise实例会把返回值进行传递，然后传递给p的回调函数。</p>
+<hr>
+<h3 id="6-Promise-allSettled"><a href="#6-Promise-allSettled" class="headerlink" title="6.Promise.allSettled()"></a>6.Promise.allSettled()</h3><p>allSettled()方法也是接受一组Promise实例作为参数，包装成一个新的Promise实例，不同的是他要将所有的实例参数返回结果后，包装实例才会结束操作(ES2020引入)。</p>
+<p>该方法返回新的Promise实例，一旦完成操作结束，状态总是fulfilled，不会为rejected，状态变成fulfilled后，Promise的监听函数接收到的参数是一个数组，里面每个成员对应一个传入Promise.allSettled()的Promise实例。<br><img src="/2020/05/06/Promise/allSettled.png" alt><br>上面代码先设置了Promise对象的resolve()和reject()方法，分别返回42和-1，再对这两个实例对象传入allSettled()中，那么下面的then()方法则对定义的resolve()和reject()的结果进行返回，返回形式为对象形式，里面每个对象都会内置status属性，对于fulfilled状态，返回value，rejected状态则返回一个reason结果。</p>
+<hr>
+<h3 id="7-Promise-any"><a href="#7-Promise-any" class="headerlink" title="7.Promise.any()"></a>7.Promise.any()</h3><p>any()方法同样用于将多个Promise实例包装成一个新的Promise实例(此方法仍在提案中，浏览器尚未部署此方法):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const p &#x3D; Promise.any([p1,p2,p3]);</span><br></pre></td></tr></table></figure>
+<p>race()方法只要参数实例中有一个变成fulfilled态，包装的Promise实例立马变为fulfilled态，同时如果所有参数实例变为rejected态，那么包装实例才会变成rejected态。</p>
+<p>与race()不同的是，他不会因为参数实例中摸一个实例变成rejected态而结束操作。对于any()抛出的错误，他并不是一个一般的错误，而是继承Array的一个AggregateError实例，相当于一个数组去存储从rejected抛出的错误<br><img src="/2020/05/06/Promise/any.png" alt><br>上面代码设置了三个Promise对象，分别对Promise的resolve()和reject()方法进行操作，通过数组参数的形式传入Promise.any(),通过实例输出可以表现上面所说any()的特性。</p>
+<hr>
+<h3 id="8-Promise-resolve"><a href="#8-Promise-resolve" class="headerlink" title="8.Promise.resolve()"></a>8.Promise.resolve()</h3><p>Promise()方法能实现将传入对象转化为Promise对象:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const p &#x3D; Promise.resolve(&#39;foo&#39;) &#x2F;&#x2F; 等价于 const p &#x3D; new Promise(resolve &#x3D;&gt; resolve(&#39;foo&#39;))</span><br></pre></td></tr></table></figure>
+<p>传入参数有四种:</p>
+<h4 id="1-一个Promise实例"><a href="#1-一个Promise实例" class="headerlink" title="(1) 一个Promise实例"></a>(1) 一个Promise实例</h4><p>传入一个Promise实例的时候resolve()不做任何修改，直接返回这个Promise实例</p>
+<h4 id="2-参数是一个thenable对象"><a href="#2-参数是一个thenable对象" class="headerlink" title="(2) 参数是一个thenable对象"></a>(2) 参数是一个thenable对象</h4><p>传入对象中含有then属性，resolve()会将对象转化为Promise后执行其then方法.<br><img src="/2020/05/06/Promise/resolve.png" alt><br>上述代码定义的thenable对象含有then方法，thenable作为参数传入resolve()，状态切换为resolve，立即执行then()方法制定的回调函数，输出42</p>
+<h4 id="3-参数不为对象"><a href="#3-参数不为对象" class="headerlink" title="(3) 参数不为对象"></a>(3) 参数不为对象</h4><p>对传入参数既不是含有then方法的对象或者根本不是对象，resolve()方法会将传入值作为Promise对象名生成一个状态为resolved的Promise对象<br><img src="/2020/05/06/Promise/noParams.png" alt><br>上面代码将字符串’Hello’传入，resolve()方法将字符串作为对象名生成Promise对象，通过then()赋值s进行输出。</p>
+<h4 id="4-不带任何参数"><a href="#4-不带任何参数" class="headerlink" title="(4) 不带任何参数"></a>(4) 不带任何参数</h4><p>对于不带参数的resolve()方法，会直接返回一个resolved态的Promise对象。</p>
+<hr>
+<h3 id="9-Promise-reject"><a href="#9-Promise-reject" class="headerlink" title="9.Promise.reject()"></a>9.Promise.reject()</h3><p>Promise.reject(reason)方法也会返回一个新的Promise实例，实例的状态为rejected<br><img src="/2020/05/06/Promise/reject.png" alt><br>上面代码会生成一个Promise实例对象p，状态为rejected，回调函数会立即执行</p>
+<hr>
+<h3 id="10-应用场景"><a href="#10-应用场景" class="headerlink" title="10.应用场景"></a>10.应用场景</h3><p>在一些图片加载的时候，可以将resolve和reject方法结合作为onload和onerror方法使用:<br><img src="/2020/05/06/Promise/image_onload.png" alt><br>上述代码为图片预加载对象设置了一个Promise实例，实例里面onload方法执行resolve方法的操作onerror方法可以进行reject方法上的报错处理。</p>
 
       
     </div>
@@ -579,7 +642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">浅谈Promise</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">浅谈Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解释"><span class="nav-number">1.1.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">1.2.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Promise-prototype-then"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.Promise.prototype.then()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Promise-prototype-catch"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.Promise.prototype.catch()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Promise-prototype-finally"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.Promise.prototype.finally()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Promise-all"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.Promise.all()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Promise-race"><span class="nav-number">1.2.5.</span> <span class="nav-text">5.Promise.race()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Promise-allSettled"><span class="nav-number">1.2.6.</span> <span class="nav-text">6.Promise.allSettled()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Promise-any"><span class="nav-number">1.2.7.</span> <span class="nav-text">7.Promise.any()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Promise-resolve"><span class="nav-number">1.2.8.</span> <span class="nav-text">8.Promise.resolve()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-一个Promise实例"><span class="nav-number">1.2.8.1.</span> <span class="nav-text">(1) 一个Promise实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-参数是一个thenable对象"><span class="nav-number">1.2.8.2.</span> <span class="nav-text">(2) 参数是一个thenable对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-参数不为对象"><span class="nav-number">1.2.8.3.</span> <span class="nav-text">(3) 参数不为对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-不带任何参数"><span class="nav-number">1.2.8.4.</span> <span class="nav-text">(4) 不带任何参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-Promise-reject"><span class="nav-number">1.2.9.</span> <span class="nav-text">9.Promise.reject()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-应用场景"><span class="nav-number">1.2.10.</span> <span class="nav-text">10.应用场景</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
