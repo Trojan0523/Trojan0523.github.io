@@ -333,7 +333,27 @@
       
         
           
-            <h1 style="text-align: center;">Promise个人见解</h1>
+            <h1 style="text-align: center;">浅谈Promise</h1>
+
+<blockquote>
+<p>MDN<br>Promise 对象是一个代理对象（代理一个值），被代理的值在Promise对象创建时可能是未知的。它允许你为异步操作的成功和失败分别绑定相应的处理方法（handlers）。 这让异步方法可以像同步方法那样返回值，但并不是立即返回最终执行结果，而是一个能代表未来出现的结果的promise对象。</p>
+</blockquote>
+<p>Promise对象会有三个状态进行切换:</p>
+<ul>
+<li>pending: 初始状态，字面上解析为挂起态，未进行操作处理。</li>
+<li>fulfilled: 完成态，表示操作已经处理成功。</li>
+<li>rejected: 失败态，表示操作处理失败。</li>
+</ul>
+<p>Promise字面意思就是”承诺”，表示其他手段都无法改变，所以Promise用这三个状态切换来表示异步操作的Action，用两种情况的发生表示状态的处理方法:</p>
+<ol>
+<li>pending -&gt; fulfilled 挂起态到完成态，表示操作已经成功。</li>
+<li>pending -&gt; rejected 挂起态到拒绝态，表示操作失败。</li>
+</ol>
+<p>一旦两种情况出现其中一种，状态就会进行凝固，无法进行改变，我们将这种状态称为resolved(已定型)，状态发生改变后再往promise函数添加回调函数也只能获得resolved的结果。</p>
+<p>优点: promise的出现让以往层层嵌套的回调函数变为规范的链式写法，有了promise，异步操作逻辑变得更加清晰。</p>
+<p>缺点: 一旦创建promise就会立即执行，无法中途取消(原子性)，pending态时无法得知目前进展到哪一阶段(开始或即将完成)</p>
+<p>在ES6中，Promise已经写进了语言标准，在原Promise的基础上提供了更加强大的用法</p>
+
           
         
       
