@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://pukhungyu.club/2020/05/30/gamesToLearnXss/12.png">
 <meta property="og:image" content="http://pukhungyu.club/2020/05/30/gamesToLearnXss/13.png">
 <meta property="article:published_time" content="2020-05-29T16:47:21.000Z">
-<meta property="article:modified_time" content="2020-07-13T03:27:22.590Z">
+<meta property="article:modified_time" content="2020-07-13T03:31:02.173Z">
 <meta property="article:author" content="Trojan">
 <meta property="article:tag" content="Network_security">
 <meta name="twitter:card" content="summary">
@@ -368,8 +368,9 @@
 <h3 id="到了第二关"><a href="#到了第二关" class="headerlink" title="到了第二关:"></a>到了第二关:</h3><p><img src="/2020/05/30/gamesToLearnXss/5.png" alt><br>同样是注入脚本对网站进行攻击，这里换成了对行文本输入框，我们同样也是打开frame的实现代码，先看html:</p>
 <p><img src="/2020/05/30/gamesToLearnXss/6.png" alt><br>这里的代码是直接利用innerHTML进行插入的，我们在前面提到过，使用innerHTML是有潜在安全问题的，在字符串代码里面输入script代码虽然不会有问题，但是MDN上对innerHTML的另一种安全隐患做了解释：</p>
 <blockquote>
-<p>HTML 5 中指定不执行由 innerHTML 插入的 <code>&lt;script&gt;</code> 标签,然而，有很多不依赖 <code>&lt;script&gt;</code> 标签去执行 JavaScript 的方式。所以当你使用<code>innerHTML</code> 去设置你无法控制的字符串时，这仍然是一个安全问题<br>所以虽然这里没办法直接执行Script代码，但是我们可以用标签里面注入要执行的方法来达到我们的目的:<br><code>&lt;img src=&quot;https://xss-game.appspot.com/static/level2_icon.png onload=&quot;alert(1)&quot;&gt;</code><br>我们在前台代码里面找到一张图片资源文件的路径，通过标签的形式将图片写入输入框，同时在标签中注入要执行的alert语句，执行成功:</p>
+<p>HTML 5 中指定不执行由 innerHTML 插入的 <code>&lt;script&gt;</code> 标签,然而，有很多不依赖 <code>&lt;script&gt;</code> 标签去执行 JavaScript 的方式。所以当你使用<code>innerHTML</code> 去设置你无法控制的字符串时，这仍然是一个安全问题</p>
 </blockquote>
+<p>所以虽然这里没办法直接执行Script代码，但是我们可以用标签里面注入要执行的方法来达到我们的目的:<br><code>&lt;img src=&quot;https://xss-game.appspot.com/static/level2_icon.png onload=&quot;alert(1)&quot;&gt;</code><br>我们在前台代码里面找到一张图片资源文件的路径，通过标签的形式将图片写入输入框，同时在标签中注入要执行的alert语句，执行成功:</p>
 <p><img src="/2020/05/30/gamesToLearnXss/7.png" alt></p>
 <h3 id="到了第三关"><a href="#到了第三关" class="headerlink" title="到了第三关"></a>到了第三关</h3><p><img src="/2020/05/30/gamesToLearnXss/8.png" alt><br>一开始没有看到输入框没有头绪，这时候我们先打开JS代码看看有没有漏网之鱼，我们发现虽然他的图片也是通过标签的形式用类似innerHTML的形式写进页面的，这里用了JQuery进行编写，通过window.location.hash通过url num的切换达到图片切换的目的，那么我们试想一下，根据url就能切换不同的图片，但是代码中没有对num进行长度限制，那么我们将num的编号写成3以上看看效果：<br><img src="/2020/05/30/gamesToLearnXss/9.png" alt><br>发现图片在location.hash切换为4的时候仍然能够有页面刷新，那么我们确定bug就在这个url上面，跟上面一关道理一样，在图片中加入img的事件处理方法’onerror’,让他在错误的时候弹出处理代码：<br><code>https://xss-game.appspot.com/level3/frame#4.jpg&#39; onerror=&quot;alert(1)&quot;</code><br>这里的图片是不会正常显示出来的，所以会触发onerror事件，同样的在1 2 3 图片中输入onload事件也可以执行相对应的代码，执行成功：<br><img src="/2020/05/30/gamesToLearnXss/10.png" alt></p>
 <h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p><img src="/2020/05/30/gamesToLearnXss/11.png" alt><br>这里意图是创建一个定时器，通过用户输入的数字设置计时器的秒数，查看其JS代码，输入框内输入文本会利用parseInt()将其转换为整型数字，点开提示看看提示信息：<br><img src="/2020/05/30/gamesToLearnXss/12.png" alt><br>提示2 3中我们可以发现的是，在浏览器解析这段标签的时候，需要将html的值先进行解析并且转译，同时输入一个<code>&#39;</code>看看控制台的报错:</p>
