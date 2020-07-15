@@ -262,6 +262,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pukhungyu.club/2020/07/13/module-sum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Trojan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headcut.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trojan`s的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/13/module-sum/" itemprop="url">module-sum</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-13T13:02:22+08:00">
+                2020-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 style="text-align: center;">ES6模块和CommonJS模块总结</h1>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在做Vue项目的时候，对ES6还不是特别的理解，尤其是一开始对不同模块进行的模块引入，怎么引入这些模块，为什么这样去引入，什么是按需加载模块，这些东西在做项目的时候没有很好的理解，项目做完一段时间的现在，复盘项目时，顺便去复习一下学到的ES6知识，顺便做个小的总结。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>ES6 module : <code>import {state, exists, readFile} from &#39;fs&#39;;</code> ，export{指定输出变量(方法名)} as ReName(重命名输出变量) 使用<code>export default</code>为模块指定默认输出</p>
+<p>CommonJS : <code>let { stat, exists, readfile } = require(&#39;fs&#39;);</code></p>
+<p>在ES6中，export规定模版的对外接口，而import用于输入其他模块提供的功能，这里可以使用<code>*</code>做模块的全部引入，但是一般不会这样做，因为一些没有使用过的模块一并引入会导致文件体积过大，影响效率。</p>
+<p>ES6在设计的时候思想是尽量的静态化，让资源在编译时就能确定模块的依赖关系和输入输出变量:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123;firstName, lastName, year&#125; from &#39;.&#x2F;common.js&#39;</span><br></pre></td></tr></table></figure>
+<p>这里的所有引入的变量为只读状态，如果有需要的话，是可以对模块进行改写的，但是因为非常难查错，所以我们尽量只对这些资源当成只读状态而不去改变它们。</p>
+<p>另外，import无论放置在文件的任何位置，都会有提升至模块头部的效果，跟变量var会有变量提升的效果类似。</p>
+<p>为什么ES6会将模块引入设计为尽量的静态化呢，因为静态化模块可以在编译时得到模块中的对象，从而进行静态优化，而不需要等到运行时在能真正获得模块，在运行时的时候是没有办法进行静态优化的，所以这样设计的好处是不少的。</p>
+<p>再来说说CommonJS模块化: CommonJS的加载模块是同步的，也就是说他要在加载完成之后才能执行后面的操作，同时CommonJS是可以修改引入变量的值，但是他对数据的支持并没有想象中的丰富，对于基本的数据类型，他是复制的，也就是说修改引入的基本数据类型不会修改原来模块的值，但是对于复杂数据类型，他是浅拷贝，引用的模块与原先的模块公用同一块内存地址，所以导致修改一处，两处都会发生变化。在require命令第一次加载模块之后，如果需要重新加载，他不会再次执行，而是拿到缓存中的值，以后再加载的时候拿到的也是第一次加载的值，不会发生变化。</p>
+<p>对于ES6，对复杂数据类型就有了一定的支持，正是因为之前静态化的设计，所以对一切数据类型，只要执行import命令，就会生成一个只读引用，同时动态的只读引用，在原模块中修改变量值后在引用模块也会发生变化。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ol>
+<li><p>CommonJs require() 在node中支持动态加载。<br>ES6 import() 在ES2020提案中才支持动态加载。</p>
+</li>
+<li><p>CommonJS 值拷贝缓存<br>ES6值引用(动态引用)</p>
+</li>
+<li><p>CommonJS为运行时加载<br>ES6编译时输出接口</p>
+</li>
+<li><p>NodeJS加载<br> CommonJS 后缀 <code>.cjs</code>, type: commonjs<br> ES6 module 后缀 <code>.mjs</code>, type: module</p>
+</li>
+<li><p>CommonJS require后 顶层this 为当前模块<br>ES6 module import后 顶层this 返回undefined，不指向window</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://pukhungyu.club/2020/05/30/gamesToLearnXss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1291,7 +1435,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1304,7 +1448,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
