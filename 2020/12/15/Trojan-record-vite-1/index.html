@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="改造日记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Trojan记账改造迭代(vue3 + vite)第一期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trojan-record-vite-1">
+<meta property="og:url" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index.html">
+<meta property="og:site_name" content="Trojan&#96;s的小站">
+<meta property="og:description" content="Trojan记账改造迭代(vue3 + vite)第一期">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-1.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-2.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-3.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-6.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-7.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-4.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-8.png">
+<meta property="article:published_time" content="2020-12-15T05:05:55.000Z">
+<meta property="article:modified_time" content="2020-12-16T14:11:46.967Z">
+<meta property="article:author" content="Trojan">
+<meta property="article:tag" content="改造日记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/index-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":16,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/"/>
+
+
+
+
+
+  <title>Trojan-record-vite-1 | Trojan`s的小站</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Trojan`s的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、记录、交流</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pukhungyu.club/2020/12/15/Trojan-record-vite-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Trojan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headcut.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trojan`s的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Trojan-record-vite-1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-15T13:05:55+08:00">
+                2020-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 style="text-align: center;">Trojan记账改造迭代(vue3 + vite)第一期</h1>
+
+<a id="more"></a>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><p>不慌不忙，离职之后回校把第一个重构的项目写完了，中途遇到很多坑，同时也对vue3有了更多的了解，写下第一期的改造日记，同时也方便想学习本项目的同学一步一步去迭代vue2的记账项目，本文会先从项目构建带着你一步一步将自己的vue2项目升级到vue3，在升级前，需要你对vue3的一些新特性(Composition API)和打包构建工具vite进行了解，不会用没关系，接下来会带着你们一步一步往下学习并且重构，由于我们采用比较快速的迭代方式，所有样式全部复用Vue2项目时的css，减轻我们在编写组件样式的负担，快速将项目成型，文章以下内容以一个个单文件组件的形式进行讲解。</p>
+</li>
+<li><p>既然用到vue3，那就要干脆点，把vue相关生态全部升级到最新，技术栈：Vue3 + TypeScript + Vuex4 + vue-router4 + vite + Echarts</p>
+</li>
+</ul>
+<p>项目设计稿： <a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-1-13-18-5-54.pdf" target="_blank" rel="noopener">figma设计跳转</a></p>
+<p>Vue2项目链接： <a href="https://github.com/Trojan0523/record-money" target="_blank" rel="noopener">源码地址跳转</a> <a href="https://pukhungyu.club/trojan-record">预览地址跳转</a></p>
+<p>Vue3迭代链接： <a href="https://github.com/Trojan0523/Trojan-record-vite" target="_blank" rel="noopener">源码地址跳转</a>  <a href="https://trojan0523.gitee.io/record_preview" target="_blank" rel="noopener">预览地址跳转</a></p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>项目目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">├─.gitignore      </span><br><span class="line">├─custom.d.ts 		--全局类型声明文件</span><br><span class="line">├─deploy.sh 		--部署脚本</span><br><span class="line">├─index.html 		</span><br><span class="line">├─package.json 		</span><br><span class="line">├─README.md 		</span><br><span class="line">├─shims-vue.d.ts 	--svg文件引入声明</span><br><span class="line">├─tsconfig.json 	--TS编译选项声明</span><br><span class="line">├─vite.config.ts 	--vite打包配置文件</span><br><span class="line">├─yarn.lock</span><br><span class="line">├─src</span><br><span class="line">|  ├─App.vue 		--App入口</span><br><span class="line">|  ├─main.ts 		--App初始化入口</span><br><span class="line">|  ├─views 			-- 展示层</span><br><span class="line">|  |   ├─EditLabel.vue 	-- 标签编辑页</span><br><span class="line">|  |   ├─Labels.vue 	-- 标签页</span><br><span class="line">|  |   ├─Money.vue 		-- 记账页</span><br><span class="line">|  |   ├─NotFound.vue 	-- 404 页面</span><br><span class="line">|  |   └Statistics.vue 	-- 统计页</span><br><span class="line">|  ├─store</span><br><span class="line">|  |   └index.ts 		-- vuex</span><br><span class="line">|  ├─router</span><br><span class="line">|  |   └index.ts 		-- vue-router</span><br><span class="line">|  ├─mixins</span><br><span class="line">|  |   └TagHelper.ts 	-- 混入创建标签(已弃用)</span><br><span class="line">|  ├─lib</span><br><span class="line">|  |  ├─clone.ts 		-- 数据复制工具类</span><br><span class="line">|  |  └createId.ts 		-- ID创建工具类</span><br><span class="line">|  ├─hooks</span><br><span class="line">|  |   └useTagHelper.ts -- 创建标签Hooks改造</span><br><span class="line">|  ├─constants</span><br><span class="line">|  |     └RecordTypeList.ts -- 记账类型定义(收入或支出)</span><br><span class="line">|  ├─components</span><br><span class="line">|  |     ├─Button.vue 		-- Button组件</span><br><span class="line">|  |     ├─Chart.vue 		-- 封装Echarts组件</span><br><span class="line">|  |     ├─Icon.vue 		-- 封装Icon组件</span><br><span class="line">|  |     ├─Layout.vue 		-- 布局组件</span><br><span class="line">|  |     ├─Nav.vue 			-- 导航栏组件</span><br><span class="line">|  |     ├─Tabs.vue 		-- 封装标签组件(记账类型)</span><br><span class="line">|  |     ├─Money</span><br><span class="line">|  |     |   ├─FormItem.vue 	-- 封装输入表单组件</span><br><span class="line">|  |     |   ├─NumberPad.vue 	-- 数字键盘组件</span><br><span class="line">|  |     |   └Tags.vue 		 	-- 封装标签组件(支出收入标签,默认创建衣食住行)	</span><br><span class="line">|  ├─assets</span><br><span class="line">|  |   ├─logo.png</span><br><span class="line">|  |   ├─style</span><br><span class="line">|  |   |   ├─helper.scss 		-- 样式辅助(字体，清除浮动)</span><br><span class="line">|  |   |   └reset.scss 			-- 样式初始化重置</span><br><span class="line">|  |   ├─icons 					-- iconfont引入svg图片文件夹</span><br><span class="line">|  |   ├─echarts</span><br><span class="line">|  |   |    └echarts.min.js 	-- 全局引入echartsJS</span><br><span class="line">├─public</span><br><span class="line">|   └favicon.ico</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="起手式–架子搭建"><a href="#起手式–架子搭建" class="headerlink" title="起手式–架子搭建"></a>起手式–架子搭建</h2><ul>
+<li>创建vite-app非常方便，跟用vue-cli新建项目没有任何区别，只需要执行以下命令即可创建一个vite vue3项目：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npm init vite-app &lt;project-name&gt;  or 	$ yarn create vite-app &lt;project-name&gt;</span><br><span class="line">$ cd &lt;project-name&gt;			$ cd &lt;project-name&gt;</span><br><span class="line">$ npm install				$ yarn </span><br><span class="line">$ npm run dev				$ yarn dev</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>创建完项目之后，对用到的vue生态库进行引入安装:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add --dev vuex</span><br><span class="line">$ yarn add --dev vue-router</span><br><span class="line">$ yarn add --dev sass  &#x2F;&#x2F; 安装sass是为了编译SCSS，消除引用sass-loader的报错</span><br></pre></td></tr></table></figure>
+
+<p>直接进入main.ts:</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-1.png" alt></p>
+<p>vue3比较大的改动是基本上实现模块化的改写，大部分功能都要进行引入，与Vue2不同的是，Vue3采用的是createApp的方式对vue进行实例化，所以这里需要对createaApp进行引入，然后通过mount()方法挂载到#app上，为了之后能较为方便的对组件和相关生态的引入，可以初始化一个变量为app，赋值为 CreateApp(App) (App为App.vue,是整个应用的入口)</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-2.png" alt></p>
+<p>进入app.vue,因为我们采用TS进行项目的编写，所以要将script的lang属性设置为ts，由于传统的vue.extends的方式对类组件无法给出正确的参数推断，所以需要引入defineComponent来开启类型推断，写法如下：</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-3.png" alt></p>
+<p>介绍完App.vue之后，我们接着讲引入的vuex和vue-router做一下初始化，为了使项目结构比较清晰模块化，对vuex和vue-router分别新建一个文件夹，为router/和store/文件夹里面的index.ts分别是编写路由和状态管理的地方，先是创建store/index.ts，对vuex进行初始化：同样需要对其vuex进行模块化引入createStore：</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-6.png" alt></p>
+<p>同样vue-router也需要模块化引入，在router/index.ts中引入createRouter，同时我们采用的是history模式的路由跳转，需要引入createWebHistory:</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-7.png" alt></p>
+<p>我们接下来就对整个App的路由和整体的布局进行编写，项目结构中我们介绍到一共是有五个展示页面，分别是: 记账页，标签页， 标签编辑页，统计页和一个404页面，所以接下来我们需要创建编写路由，编写路由前，需要创建这五个页面组件：以Money.vue为例进行创建：</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-4.png" alt></p>
+<p>接下来对这五个页面组件进行路由编写，引入组件后对组件的路径、组件名和组件进行编写，与router3有所不同的是，对于找不到路由的路由页面，vue-router会自动进行捕获，也就是除了已有的路由规则之外，所有的页面自动跳转到404页，通过正则的写法<code>/:pathMath(.*)*</code>进行路由编写,路由规则编写如下:</p>
+<p><img src="/2020/12/15/Trojan-record-vite-1/index-8.png" alt></p>
+<p>到这里我们基本的项目框架已经搭建起来了，之后的组件编写都是围绕着五个路由的组件页面进行编写，下一期的迭代日记会对项目的布局和记账页面(Money.vue)进行记录，写的不好欢迎指出，谢谢观看~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="Trojan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>笔者微信，与作者交流可扫描二维码</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>思绪有感写下本文，若觉得感同身受可以支持下作者</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Trojan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Trojan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%94%B9%E9%80%A0%E6%97%A5%E8%AE%B0/" rel="tag"># 改造日记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/15/Vue2-sourceCode-learn/" rel="next" title="Vue2-sourceCode-learn">
+                <i class="fa fa-chevron-left"></i> Vue2-sourceCode-learn
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headcut.jpg"
+                alt="Trojan" />
+            
+              <p class="site-author-name" itemprop="name">Trojan</p>
+              <p class="site-description motion-element" itemprop="description">做自己的事，质疑权威，觉得对的就去做，不要盲从，自我反思，坦诚面对自我，勇于承担责任</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Trojan0523" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/trojan-60" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-quora"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3374943404?refer_flag=1005055010_&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://wx.qq.com/" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Trojan记账改造迭代(vue3 + vite)第一期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构"><span class="nav-number">1.2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#起手式–架子搭建"><span class="nav-number">1.3.</span> <span class="nav-text">起手式–架子搭建</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trojan</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

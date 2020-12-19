@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Vue2源码学习笔记 (第一期)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2-sourceCode-learn">
+<meta property="og:url" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index.html">
+<meta property="og:site_name" content="Trojan&#96;s的小站">
+<meta property="og:description" content="Vue2源码学习笔记 (第一期)">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/mechanical.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-1.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-2.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-3.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-4.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-5.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-6.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-7.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-8.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-9.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-10.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-11.png">
+<meta property="og:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/index-12.png">
+<meta property="article:published_time" content="2020-09-15T03:22:25.000Z">
+<meta property="article:modified_time" content="2020-12-15T05:04:25.370Z">
+<meta property="article:author" content="Trojan">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content=" Tech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/mechanical.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":16,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/"/>
+
+
+
+
+
+  <title>Vue2-sourceCode-learn | Trojan`s的小站</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Trojan`s的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、记录、交流</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pukhungyu.club/2020/09/15/Vue2-sourceCode-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Trojan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headcut.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trojan`s的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue2-sourceCode-learn</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-15T11:22:25+08:00">
+                2020-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 style="text-align: center;">Vue2源码学习笔记 (第一期)</h1>
+
+<a id="more"></a>
+
+<h2 id="开篇前言"><a href="#开篇前言" class="headerlink" title="开篇前言"></a>开篇前言</h2><ul>
+<li><p>好久没有写东西了，实习快俩月，一直觉得自己很忙没有抽空出来去更新下自己的博客，其实就是自己不会灵活分配和利用自己的时间去高效做事，忙里偷闲，正好昨天开始对Vue2的源码进行阅读，不少师兄同事建议我去读读尤大的源码，理解一下Vue的源码是怎么设计的，究竟做了一些什么事，尤其是对响应式的实现为什么会这样设计，所以就有了这一篇读书笔记出来，学习一下怎么去看核心代码。注意：代码不能死读，也不用全部都读，可以跳着看，跟着作者的设计思路走，理解做了什么事是重点，多看看作者写的注释，这很关键。做完这步之后，尝试去提炼出作者运用到的设计模式，借鉴他的思想。 第一期的博客我会对Vue的核心 – 响应式系统进行解析。</p>
+</li>
+<li><p>本文估计会看的有点枯燥，建议开着音乐边听边看~~(30 mins)</p>
+</li>
+</ul>
+<h2 id="响应式流程机制"><a href="#响应式流程机制" class="headerlink" title="响应式流程机制"></a>响应式流程机制</h2><ul>
+<li><p>那其实大家也知道，Vue2的响应式机制主要是依赖object.defineProperty对数据进行劫持，然后通过getter/setter方法对数据进行读写操作。话不多说，先上个’牛程’图说说从new Vue()开始到dom渲染结束做了些什么，整个响应式就发生在图中，对 @染陌同学 的内部流程图修改了一下,方便大家先对整个流程进行熟悉~</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/mechanical.png" alt></p>
+<p>先解释一下整个流程图做了些什么再去看看源码怎么实现的，先说思路，首先我们在new 一个Vue对象的时候，在内部就会调用_init()进行初始化，Vue对象经过初始化之后，通过$mount进行挂载后，会将挂载的对象进行编译，在编译的时候调用compile()方法，其中compile会经过parse,generate和optimize(directive binding)等操作才能将每一个Vue对象进行解析编译，生成渲染函数(即 render function)，渲染式经过渲染之后分为两条路走：一个是直接渲染生成虚拟DOM Tree,一个是在进行render的时候，触发了观察者的更新机制，通过getter方法进行依赖收集，setter方法会通知Watcher Dep的订阅者对象，Dep(Watcher的拷贝)更新VNode，两种方法最终都会通过patch()方法对新旧VNode节点进行传入，然后经过diff算法去比对新旧节点的差异，进行替换更新(updateChildren)，生成DOM节点然后渲染HTML页面。</p>
+<p>我们来到Vue源代码，打开src/core/observer/，里面的代码就是我们这次要分析的整个响应式机制的代码,今天先对index.js进行分析:</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-1.png" alt></p>
+<p>里面首先对Dep VNode arrayMethods 三个方法类进行导入，他们分别是订阅者, 虚拟节点，数组方法。同时在工具类中对一些需要用于判断对象的方法进行引用，转到接下来的代码:</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-2.png" alt></p>
+</li>
+</ul>
+<p>某些情况下，在组件更新渲染的时候，我们并不想对数组进行观察，所以这里对观察机制的触发进行了定义，定义了一个<code>toggleObserving</code>方法来控制对象是否能被observe</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-3.png" alt></p>
+<p>接下来就是观察者类定义，每个被观察到的对象被附加上观察者实例，一旦被添加，观察者就会为目标对象添加getter/setter属性，然后进行依赖收集和调度更新，观察者对象里面有三个属性，一个是属性值value，一个是依赖收集的对象和对象作为根节点的vm个数，在构造选项里面，先将属性进行绑定，实例化一个Dep订阅者对象，也就是<code>object.defineProperty()</code>将收集到的对象进行传入:</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-4.png" alt></p>
+<p>def方法的定义，其实就是将<code>object.defineProperty()</code>进行包装，传入property。</p>
+<p>回到观察者定义类中，我们知道，<code>object.defineProperty</code>是有缺陷的， 他只能劫持对象的属性，所以需要我们对属性进行数组判断，方法本身对数组对象的支持比较差，判断为数组之后，将修改后可以劫持响应的数组方法替换掉该数组的原型中的原生方法(<code>protoAugment()</code>)，调用<code>observeArray()</code>对数组进行观察。同时判断数组是否存在<code>__proto__</code>属性,不存在则调用<code>copyAugment()</code>方法，如果不是数组的话直接将对象进行遍历。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-5.png" alt></p>
+<p><code>walk()</code>方法实现了对每一个对象进行遍历，同时修改他的getter/setter方法然后绑定(<code>defineReactive()</code>为每一个对象定义响应式属性), <code>observeArray()</code>方法对一个数组的所有元素进行observe。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-6.png" alt></p>
+<p><code>protoAugment()</code>在上文被调用，主要是用来对目标对象参数或者数组进行劫持，对他的原型方法进行覆盖。 <code>copyAugment()</code>方法对目标对象或者数组进行隐藏属性的定义,其实现同样是通过遍历对象，将对象中的每个属性进行定义。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-7.png" alt></p>
+<p><code>observe()</code>方法的目的很明显，就是为了每一个对象的属性值创建一个观察者对象，创建成功返回一个新的观察者对象，如果属性值中存在观察者对象则返回现有的对象。这里对进行了比较复杂的判断，主要是确保对象是单纯的对象或者是数组，最后对根节点和观察者对象都存在的情况下，对vm进行计数，最后返回观察者实例。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-8.png" alt></p>
+<p>来到整个响应式的核心定义方法<code>defineReactive()</code>,这里是为对象的<code>defineProperty</code>上响应式变化通知进行定义，在此方法里首先先实例化了一个Dep订阅者,然后对预先定义好的getter/setter方法进行拷贝，然后对子对象进行浅拷贝和观察者实例生成。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-9.png" alt></p>
+<p>通过之前的getter/setter将之前预先定义的getter/setter方法进行拷贝后，就可以放心对getter/setter方法进行改写了，还是通过<code>Object.defineProperty()</code>将对象和key传入，将getter/setter方法分别改写成<code>reactiveGetter()</code>和<code>reactiveSetter()</code>，<code>reactiveGetter()</code>方法首先将之前预先收集到的getter转化后传入value中,如果原本对象有getter方法则直接执行，接着通过判断Dep的目标对象进行依赖收集<code>dep.depend()</code>,如果有子节点对象的话则继续进行子节点的依赖收集，如果子节点中存在对象的话则需要单独对数组进行递归收集。</p>
+<p><code>reactiveSetter()</code>方法需要对<code>reactiveGetter()</code>返回的值进行获取，比对新值和旧值的变化，如果没有变化则不需要更新，同样的如果原本对象有setter方法则直接执行，新的值需要赋值到旧值中去，保证在响应式内可以接收到value并且触发响应式机制，对子节点也需要生成观察者对象进行监听，最后dep订阅者需要对更新进行通知，也就是回到watcher中进行接下来的更新操作。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-10.png" alt></p>
+<p>这里单独对set方法进行定义。如果属性不存在的话，为对象添加新的属性和触发通知更新机制。传入的目标为数组时则在指定位置上插入val，同时数组是不需要做响应式处理的，所以数组会修改七个Array原型上的方法进行响应式处理。之后再进行数组的判断，如果key存在则直接返回，往下需要获得target的观察者实例，判断目标对象：_isVue 一个防止vm实例自身被观察的标志位 ，_isVue为true则代表vm实例，也就是this,vmCount判断是否为根节点，存在则代表是data的根节点，Vue 不允许在已经创建的实例上动态添加新的根级响应式属性(root-level reactive property),所以需要在data()里面去创建响应式的属性，也就是我们平时传到data里面的变量。最后需要对对象的value添加响应式，进行依赖收集之后通知Watcher，完成依赖收集。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-11.png" alt></p>
+<p><code>del()</code>方法在需要的时候可以删除一个属性和触发更新机制，这里的话也是对传入目标进行对象和数组的判断并作出处理，然后删除掉目标对象或数组的val，然后通知订阅者Dep进行触发更新通知。与上面的set方法操作差不多。</p>
+<p><img src="/2020/09/15/Vue2-sourceCode-learn/index-12.png" alt></p>
+<p>来到最后一个方法 <code>dependArray()</code>，这里对数组上面的元素进行遍历，观察者进行依赖收集，如果数组成员是数组的话则进行递归遍历，继续对数组成员的数组进行依赖收集。</p>
+<p>我们今天对响应式机制的核心代码进行了一部分的分析，相信大家对响应式的机制会有一个更深刻的理解，接着会对订阅者Dep和观察者Watcher进行分析，相信大家对响应式系统的基本原理和依赖收集追踪原理会有一个不错的认识，谢谢大家花时间看到这里，如有分析不足之处希望提出~~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="Trojan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>笔者微信，与作者交流可扫描二维码</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>思绪有感写下本文，若觉得感同身受可以支持下作者</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Trojan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Trojan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/21/emotion/" rel="next" title="emotion">
+                <i class="fa fa-chevron-left"></i> emotion
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/12/15/Trojan-record-vite-1/" rel="prev" title="Trojan-record-vite-1">
+                Trojan-record-vite-1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headcut.jpg"
+                alt="Trojan" />
+            
+              <p class="site-author-name" itemprop="name">Trojan</p>
+              <p class="site-description motion-element" itemprop="description">做自己的事，质疑权威，觉得对的就去做，不要盲从，自我反思，坦诚面对自我，勇于承担责任</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Trojan0523" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/trojan-60" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-quora"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3374943404?refer_flag=1005055010_&is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://wx.qq.com/" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Vue2源码学习笔记 (第一期)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开篇前言"><span class="nav-number">1.1.</span> <span class="nav-text">开篇前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式流程机制"><span class="nav-number">1.2.</span> <span class="nav-text">响应式流程机制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trojan</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
